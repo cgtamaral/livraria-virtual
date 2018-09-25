@@ -18,13 +18,13 @@ public class BookServiceImpl implements BookService
 	private static final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
 
 	@Autowired
-	BookRepository livroRepository;
+	BookRepository bookRepository;
 	
 	@Override
 	public List<Book> findAll()
 	{	
 		log.info("Buscando todos os livros da base! {}");
-		return livroRepository.findAll();
+		return bookRepository.findAll();
 	}
 
 }

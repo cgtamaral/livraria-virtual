@@ -25,14 +25,14 @@ public class BookController {
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
 	@Autowired
-	BookService livroService;
+	BookService bookService;
 	
 	@GetMapping(value ="/livros")
 	public ResponseEntity<Response<List<BookDTO>>> findAll()
 	{
 		log.info("Buscando todos os livros da base! {}");
 		Response<List<BookDTO>> response = new Response<List<BookDTO>>();
-		List<Book> livros = livroService.findAll();
+		List<Book> livros = bookService.findAll();
 
 		if (livros == null || livros.size() == 0) {
 			log.info("Nenhum livro foi encontrado na base de dados!");
