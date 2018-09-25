@@ -1,6 +1,7 @@
 package br.pucminas.livrariavirtual.api.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,12 @@ public class BookServiceImpl implements BookService
 	{	
 		log.info("Buscando todos os livros da base! {}");
 		return bookRepository.findAll();
+	}
+
+	@Override
+	public Optional<Book> findById(Long idLivro) {
+		log.info("Buscando o livro na base {}:" + idLivro);
+		return bookRepository.findById(idLivro);
 	}
 
 }

@@ -1,6 +1,7 @@
 package br.pucminas.livrariavirtual.api.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.pucminas.livrariavirtual.api.Response;
 import br.pucminas.livrariavirtual.api.dtos.BookDTO;
+import br.pucminas.livrariavirtual.api.dtos.BookReviewDTO;
 import br.pucminas.livrariavirtual.api.entities.Book;
+import br.pucminas.livrariavirtual.api.entities.BookReview;
 import br.pucminas.livrariavirtual.api.services.BookService;
 
 
@@ -46,4 +49,28 @@ public class BookController {
 		return ResponseEntity.ok(response);
 	}
 
+	@GetMapping(value ="/livros/{idLivro}/comentarios")
+	public ResponseEntity<Response<BookReviewDTO>> findAllBookReviewForBook(Long idLivro)
+	{
+		log.info("Buscando todos os comentários de um livro na base! {}");
+		Response<BookReviewDTO> response = new Response<BookReviewDTO>();
+		Optional<Book> book = bookService.findById(idLivro);
+		
+		if (!book.isPresent()) {
+			log.info("Nenhum livro encontrado para o idLivro {}:", idLivro);
+			response.getErrors().add("Nenhum livro encontrado para o idLivro " + idLivro);
+			return ResponseEntity.badRequest().body(response);
+		}
+		
+		if(book.get().getBookReviews()==null || book.get().getBookReviews().size() == 0)
+		{
+			log.info("Nenhum comentário cadastrado até o momento para o livro com idLivro {}:", idLivro);
+			response.getErrors().add("Nenhum comentário cadastrado até o momento para o livro com idLivro " + idLivro);
+			return ResponseEntity.badRequest().body(response);
+		}
+		
+		response.setData(BookReview.convertToDTO(book.get().getBookReviews()));
+		
+		return ResponseEntity.ok(response);
+	}
 }

@@ -2,15 +2,16 @@ package br.pucminas.livrariavirtual.api.entities;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import br.pucminas.livrariavirtual.api.dtos.BookDTO;
@@ -18,7 +19,7 @@ import br.pucminas.livrariavirtual.api.dtos.BookDTO;
 @Entity
 public class Book 
 {
-	private Integer id;
+	private Long id;
 	private String title;
 	private String language;
 	private String ISBN10Code;
@@ -28,15 +29,17 @@ public class Book
 	private String edition;
 	private String productDimensions;
 	private Double shippingWeight;
+	private String unitMeasure;
 	private Integer averageCustomerReview;
 	private Double bestSellerRank;
 	private Double price; 
+	private List<BookReview> bookReviews;
 	
 	public Book() {	}
 	
-	public Book(Integer id, String title, String language, String ISBN10Code, String ISBN13Code,
+	public Book(Long id, String title, String language, String ISBN10Code, String ISBN13Code,
 			List<Author> authors, Publisher publisher, String edition, String productDimensions, Double shippingWeight,
-			Integer averageCustomerReview, Double bestSellerRank, Double price) {
+			String unitMeasure, Integer averageCustomerReview, Double bestSellerRank, Double price, List<BookReview> bookReviews) {
 		this.id = id;
 		this.title = title;
 		this.language = language;
@@ -47,18 +50,20 @@ public class Book
 		this.edition = edition;
 		this.productDimensions = productDimensions;
 		this.shippingWeight = shippingWeight;
+		this.unitMeasure = unitMeasure;
 		this.averageCustomerReview = averageCustomerReview;
 		this.bestSellerRank = bestSellerRank;
 		this.price = price;
+		this.bookReviews = bookReviews;
 	}
 	
 	
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -103,7 +108,8 @@ public class Book
 		this.authors = authors;
 	}
 
-	@ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "publisher_id", nullable = false)
 	public Publisher getPublisher() {
 		return publisher;
 	}
@@ -135,9 +141,16 @@ public class Book
 	public void setShippingWeight(Double shippingWeight) {
 		this.shippingWeight = shippingWeight;
 	}
+	
+	@Column(name = "unit", nullable = false)
+	public String getUnitMeasure() {
+		return unitMeasure;
+	}
+	public void setUnitMeasure(String unitMeasure) {
+		this.unitMeasure = unitMeasure;
+	}
 
-
-	@Column(name = "averageCustomerReview", nullable = false)
+	@Column(name = "averageCustomerReview", nullable = true)
 	public Integer getAverageCustomerReview() {
 		return averageCustomerReview;
 	}
@@ -145,7 +158,7 @@ public class Book
 		this.averageCustomerReview = averageCustomerReview;
 	}
 
-	@Column(name = "bestSellerRank", nullable = false)
+	@Column(name = "bestSellerRank", nullable = true)
 	public Double getBestSellerRank() {
 		return bestSellerRank;
 	}
@@ -162,7 +175,14 @@ public class Book
 		this.price = price;
 	}
 
-
+	@OneToMany
+	public List<BookReview> getBookReviews() {
+		return bookReviews;
+	}
+	public void setBookReviews(List<BookReview> bookReviews) {
+		this.bookReviews = bookReviews;
+	}
+	
 	@Transient
 	public static List<BookDTO> convertToDTO(List<Book> books) 
 	{
