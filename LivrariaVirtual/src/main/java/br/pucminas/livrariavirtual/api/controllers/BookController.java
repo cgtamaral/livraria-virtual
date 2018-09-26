@@ -35,11 +35,13 @@ import br.pucminas.livrariavirtual.api.entities.Publisher;
 import br.pucminas.livrariavirtual.api.services.BookReviewService;
 import br.pucminas.livrariavirtual.api.services.BookService;
 import br.pucminas.livrariavirtual.api.services.CustomerService;
+import io.swagger.annotations.Api;
 
 
 @RestController
 @RequestMapping("/v1/public")
 @CrossOrigin(origins = "*")
+@Api(value = "Books", description = "Recurso para gerenciamento de livros")
 public class BookController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);

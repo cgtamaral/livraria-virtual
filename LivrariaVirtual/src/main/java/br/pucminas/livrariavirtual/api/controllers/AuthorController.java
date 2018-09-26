@@ -26,10 +26,12 @@ import br.pucminas.livrariavirtual.api.dtos.BookDTO;
 import br.pucminas.livrariavirtual.api.dtos.PublisherDTO;
 import br.pucminas.livrariavirtual.api.entities.Author;
 import br.pucminas.livrariavirtual.api.services.AuthorService;
+import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping("/v1/public")
 @CrossOrigin(origins = "*")
+@Api(value = "Authors", description = "Recurso para gerenciamento de autores")
 public class AuthorController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AuthorController.class);
