@@ -88,7 +88,6 @@ public class Author
 			authorDTO.setId(author.id);
 			authorDTO.setName(author.name);
 			authorDTO.setBiography(author.biography);
-			authorDTO.setBooks(Book.convertToDTO(author.getBooks()));
 			retorno.add(authorDTO);
 		}
 		return retorno;

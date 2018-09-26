@@ -1,5 +1,6 @@
 package br.pucminas.livrariavirtual.api.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -186,8 +187,39 @@ public class Book
 	@Transient
 	public static List<BookDTO> convertToDTO(List<Book> books) 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		List<BookDTO> retorno = new ArrayList<BookDTO>();
+		for (Book book : books) {
+			
+			BookDTO bookDTO = new BookDTO();
+			bookDTO.setId(book.getId());
+			bookDTO.setTitle(book.getTitle());
+			bookDTO.setLanguage(book.getLanguage());
+			bookDTO.setISBN10Code(book.getISBN10Code());
+			bookDTO.setISBN13Code(book.getISBN13Code());
+			bookDTO.setAuthors(getAuthorsToString(book.getAuthors()));
+			bookDTO.setPublisher(book.getPublisher().getName());
+			bookDTO.setEdition(book.getEdition());
+			bookDTO.setProductDimensions(book.getProductDimensions());
+			bookDTO.setShippingWeight(book.getShippingWeight());
+			bookDTO.setUnitMeasure(book.getUnitMeasure());
+			bookDTO.setAverageCustomerReview(book.getAverageCustomerReview());
+			bookDTO.setBestSellerRank(book.getBestSellerRank());
+			bookDTO.setPrice(book.getPrice());
+			
+			retorno.add(bookDTO);
+		}
+		return retorno;
+	}
+
+	@Transient
+	private static String getAuthorsToString(List<Author> authors)
+	{
+		String retorno = "";
+		for (Author author : authors) {
+			retorno += retorno.length() == 0 ? author.getName(): ";" + author.getName();
+		}
+		
+		return retorno;
 	}
 
 }

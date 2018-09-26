@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import br.pucminas.livrariavirtual.api.dtos.PublisherDTO;
 
 @Entity
 public class Publisher {
@@ -71,5 +74,16 @@ public class Publisher {
 	}
 	public void setBooks(List<Book> books) {
 		this.books = books;
+	}
+
+	@Transient
+	public static PublisherDTO convertToDTO(Publisher publisher) 
+	{
+		PublisherDTO publisherDTO = new PublisherDTO();
+		publisherDTO.setId(publisher.getId());
+		publisherDTO.setName(publisher.getName());
+		publisherDTO.setAbout(publisher.getAbout());
+		
+		return publisherDTO;
 	}
 }

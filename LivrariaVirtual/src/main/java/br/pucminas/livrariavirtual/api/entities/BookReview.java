@@ -1,5 +1,6 @@
 package br.pucminas.livrariavirtual.api.entities;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class BookReview
 		this.title = title;
 	}
 	
-	@Column(name = "comment", length = 4000, nullable = false)
+	@Column(name = "comment", length = 1000, nullable = false)
 	public String getComment() {
 		return comment;
 	}
@@ -99,8 +100,26 @@ public class BookReview
 	}
 
 	@Transient
-	public static BookReviewDTO convertToDTO(List<BookReview> bookReviews) {
-		// TODO Auto-generated method stub
-		return null;
+	public static List<BookReviewDTO> convertToDTO(List<BookReview> bookReviews) {
+		List<BookReviewDTO> retorno = new ArrayList<BookReviewDTO>();
+		for (BookReview bookReview : bookReviews) {
+			BookReviewDTO bookReviewDTO = convertToDTO(bookReview);
+			retorno.add(bookReviewDTO);
+		}
+		return retorno;
+	}
+
+	public static BookReviewDTO convertToDTO(BookReview bookReview)
+	{
+		BookReviewDTO bookReviewDTO = new BookReviewDTO();
+		bookReviewDTO.setId(bookReview.getId());
+		bookReviewDTO.setBook(bookReview.getBook().getTitle());
+		bookReviewDTO.setCustomerId(bookReview.getCustomer().getId());
+		bookReviewDTO.setStars(bookReview.getStars());
+		bookReviewDTO.setTitle(bookReview.getTitle());
+		bookReviewDTO.setComment(bookReview.getComment());
+		bookReviewDTO.setReviewDate(bookReview.getReviewDate());
+
+		return bookReviewDTO;
 	}
 }

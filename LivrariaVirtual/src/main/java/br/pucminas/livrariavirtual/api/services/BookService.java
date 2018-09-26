@@ -20,6 +20,6 @@ public interface BookService {
 	 * 
 	 * @return Optional<Book>
 	 */
-	Optional<Book> findById(Long idLivro);
+	Optional<Book> findById(Long bookId);
 
 }

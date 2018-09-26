@@ -29,9 +29,9 @@ public class BookServiceImpl implements BookService
 	}
 
 	@Override
-	public Optional<Book> findById(Long idLivro) {
-		log.info("Buscando o livro na base {}:" + idLivro);
-		return bookRepository.findById(idLivro);
+	public Optional<Book> findById(Long bookId) {
+		log.info("Buscando o livro na base: {}" + bookId);
+		return bookRepository.findById(bookId);
 	}
 
 }

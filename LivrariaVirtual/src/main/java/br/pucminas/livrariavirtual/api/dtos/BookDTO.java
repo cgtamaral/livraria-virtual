@@ -1,7 +1,5 @@
 package br.pucminas.livrariavirtual.api.dtos;
 
-import java.util.List;
-
 public class BookDTO {
 	
 	private Long id;
@@ -9,8 +7,8 @@ public class BookDTO {
 	private String language;
 	private String ISBN10Code;
 	private String ISBN13Code;
-	private List<AuthorDTO> authors;
-	private PublisherDTO publisher;
+	private String authors;
+	private String publisher;
 	private String edition;
 	private String productDimensions;
 	private Double shippingWeight;
@@ -18,13 +16,14 @@ public class BookDTO {
 	private Integer averageCustomerReview;
 	private Double bestSellerRank;
 	private Double price; 
-	private List<BookReviewDTO> bookReviews;
 	
+	public BookDTO() {}
 	
 	public BookDTO(Long id, String title, String language, String iSBN10Code, String iSBN13Code,
-			List<AuthorDTO> authors, PublisherDTO publisher, String edition, String productDimensions,
+			String authors, String publisher, String edition, String productDimensions,
 			Double shippingWeight, String unitMeasure, Integer averageCustomerReview, Double bestSellerRank,
-			Double price, List<BookReviewDTO> bookReviews) {
+			Double price) {
+		
 		this.id = id;
 		this.title = title;
 		this.language = language;
@@ -39,7 +38,6 @@ public class BookDTO {
 		this.averageCustomerReview = averageCustomerReview;
 		this.bestSellerRank = bestSellerRank;
 		this.price = price;
-		this.bookReviews = bookReviews;
 	}
 	
 	public Long getId() {
@@ -72,16 +70,16 @@ public class BookDTO {
 	public void setISBN13Code(String iSBN13Code) {
 		ISBN13Code = iSBN13Code;
 	}
-	public List<AuthorDTO> getAuthors() {
+	public String getAuthors() {
 		return authors;
 	}
-	public void setAuthors(List<AuthorDTO> authors) {
+	public void setAuthors(String authors) {
 		this.authors = authors;
 	}
-	public PublisherDTO getPublisher() {
+	public String getPublisher() {
 		return publisher;
 	}
-	public void setPublisher(PublisherDTO publisher) {
+	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
 	public String getEdition() {
@@ -125,11 +123,5 @@ public class BookDTO {
 	}
 	public void setPrice(Double price) {
 		this.price = price;
-	}
-	public List<BookReviewDTO> getBookReviews() {
-		return bookReviews;
-	}
-	public void setBookReviews(List<BookReviewDTO> bookReviews) {
-		this.bookReviews = bookReviews;
 	}
 }
