@@ -13,6 +13,8 @@ public class PaymentOptionDTO {
 	private Calendar expirationDate;
 	private CardTypeEnum cartType;
 	
+	public PaymentOptionDTO() {}
+	
 	public PaymentOptionDTO(Long id, CustomerDTO customer, String nameOnCard, String cardNumber,
 			Calendar expirationDate, CardTypeEnum cartType) {
 		this.id = id;

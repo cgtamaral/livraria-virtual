@@ -8,17 +8,18 @@ public class CustomerDTO {
 	
 	private Long id;
 	private User user;
-	private List<AddressDTO> adresses;
+	private List<AddressDTO> addresses;
 	private List<PaymentOptionDTO> paymentOptions;
 	private List<OrderDTO> orders;
 	
+	public CustomerDTO() {}
 	
-	public CustomerDTO(Long id, User user, List<AddressDTO> adresses, List<PaymentOptionDTO> paymentOptions,
+	public CustomerDTO(Long id, User user, List<AddressDTO> addresses, List<PaymentOptionDTO> paymentOptions,
 			List<OrderDTO> orders) {
 		super();
 		this.id = id;
 		this.user = user;
-		this.adresses = adresses;
+		this.addresses = addresses;
 		this.paymentOptions = paymentOptions;
 		this.orders = orders;
 	}
@@ -35,11 +36,11 @@ public class CustomerDTO {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<AddressDTO> getAdresses() {
-		return adresses;
+	public List<AddressDTO> getAddresses() {
+		return addresses;
 	}
-	public void setAdresses(List<AddressDTO> adresses) {
-		this.adresses = adresses;
+	public void setAddresses(List<AddressDTO> addresses) {
+		this.addresses = addresses;
 	}
 	public List<PaymentOptionDTO> getPaymentOptions() {
 		return paymentOptions;

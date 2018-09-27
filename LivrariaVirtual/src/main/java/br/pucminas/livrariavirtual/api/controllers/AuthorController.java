@@ -2,6 +2,7 @@ package br.pucminas.livrariavirtual.api.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -54,6 +55,25 @@ public class AuthorController {
 		}
 
 		response.setData(Author.convertToDTO(autores));
+		
+		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping(value ="/authors/{authorId}")
+	public ResponseEntity<Response<AuthorDTO>> findAuthorById(@PathVariable("authorId") Long authorId)
+	{
+		log.info("Buscando autor: {}" + authorId);
+		Response<AuthorDTO> response = new Response<AuthorDTO>();
+		Optional<Author> autor = authorService.findById(authorId);
+
+		if (!autor.isPresent()) {
+			log.info("Nenhum autor foi encontrado para authorId: {}" + authorId);
+			response.getErrors().add("Nenhum autor foi encontrado para authorId" + authorId);
+			
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		response.setData(Author.convertToDTO(autor.get()));
 		
 		return ResponseEntity.ok(response);
 	}

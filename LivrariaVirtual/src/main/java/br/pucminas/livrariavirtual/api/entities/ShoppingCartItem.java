@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class ItemShoppingCart 
+public class ShoppingCartItem 
 {
 	private Long id;
 	private ShoppingCart shoppingCart;

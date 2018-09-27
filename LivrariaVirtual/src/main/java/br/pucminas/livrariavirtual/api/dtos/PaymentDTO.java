@@ -11,6 +11,7 @@ public class PaymentDTO {
 	private String giftCardOrPromotionalCode;
 	private Integer numberOfInstallments;
 	
+	public PaymentDTO() {}
 	
 	public PaymentDTO(Long id, String nameOnCard, String cardNumber, Calendar expirationDate,
 			String giftCardOrPromotionalCode, Integer numberOfInstallments) {

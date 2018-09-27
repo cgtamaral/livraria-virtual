@@ -1,6 +1,7 @@
 package br.pucminas.livrariavirtual.api.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import br.pucminas.livrariavirtual.api.entities.Author;
 
@@ -12,5 +13,12 @@ public interface AuthorService {
 	 * @return List<Author>
 	 */
 	List<Author> findAll();
+
+	/**
+	 * Retorna as informações de um autor conforme identificador passado como parâmetro.
+	 * 
+	 * @return Optional<Author>
+	 */
+	Optional<Author> findById(Long authorId);
 
 }

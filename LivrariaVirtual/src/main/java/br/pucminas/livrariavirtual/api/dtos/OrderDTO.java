@@ -5,13 +5,15 @@ import br.pucminas.livrariavirtual.api.enums.OrderStatusEnum;
 public class OrderDTO 
 {
 	private Long id;
+	private Long customerId;
 	private OrderStatusEnum orderStatusEnum;
 	private ShoppingCartDTO shoppingCart;
 	private DeliveryDTO delivery;
 	private Double subTotal;
 	
+	public OrderDTO() {}
 	
-	public OrderDTO(Long id, OrderStatusEnum orderStatusEnum, ShoppingCartDTO shoppingCart, DeliveryDTO delivery,
+	public OrderDTO(Long id, Long customerId, OrderStatusEnum orderStatusEnum, ShoppingCartDTO shoppingCart, DeliveryDTO delivery,
 			Double subTotal) {
 		this.id = id;
 		this.orderStatusEnum = orderStatusEnum;
@@ -25,6 +27,12 @@ public class OrderDTO
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Long getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 	public OrderStatusEnum getOrderStatusEnum() {
 		return orderStatusEnum;

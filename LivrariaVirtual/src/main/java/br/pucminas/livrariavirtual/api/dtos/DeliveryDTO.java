@@ -11,7 +11,8 @@ public class DeliveryDTO {
 	private DeliveryStatusEnum deliveryStatusEnum;
 	private PaymentDTO payment;
 	private Double price;
-		
+	
+	public DeliveryDTO() {}
 	
 	public DeliveryDTO(Long id, AddressDTO deliveryAddress, DeliveryTypeEnum deliveryTypeEnum,
 			DeliveryStatusEnum deliveryStatusEnum, PaymentDTO payment, Double price) {

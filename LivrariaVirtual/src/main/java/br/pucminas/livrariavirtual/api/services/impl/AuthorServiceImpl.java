@@ -1,6 +1,7 @@
 package br.pucminas.livrariavirtual.api.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,12 @@ public class AuthorServiceImpl implements AuthorService{
 	public List<Author> findAll() {
 		log.info("Buscando todos os autores da base! {}");
 		return authorRepository.findAll();
+	}
+
+	@Override
+	public Optional<Author> findById(Long authorId) {
+		log.info("Buscando autor: {}" + authorId);
+		return authorRepository.findById(authorId);
 	}
 
 }

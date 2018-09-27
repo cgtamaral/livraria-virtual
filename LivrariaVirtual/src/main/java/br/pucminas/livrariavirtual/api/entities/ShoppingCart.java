@@ -13,12 +13,12 @@ import javax.persistence.OneToMany;
 public class ShoppingCart 
 {
 	private Long id;
-	private List<ItemShoppingCart> itemsShoppingCart;
+	private List<ShoppingCartItem> itemsShoppingCart;
 	private Double subtotal;
 	
 	public ShoppingCart() {}
 	
-	public ShoppingCart(Long id, List<ItemShoppingCart> itemsShoppingCart, Double subtotal) {
+	public ShoppingCart(Long id, List<ShoppingCartItem> itemsShoppingCart, Double subtotal) {
 		this.id = id;
 		this.itemsShoppingCart = itemsShoppingCart;
 		this.subtotal = subtotal;
@@ -34,10 +34,10 @@ public class ShoppingCart
 	}
 	
 	@OneToMany
-	public List<ItemShoppingCart> getItemsShoppingCart() {
+	public List<ShoppingCartItem> getItemsShoppingCart() {
 		return itemsShoppingCart;
 	}
-	public void setItemsShoppingCart(List<ItemShoppingCart> itemsShoppingCart) {
+	public void setItemsShoppingCart(List<ShoppingCartItem> itemsShoppingCart) {
 		this.itemsShoppingCart = itemsShoppingCart;
 	}
 	

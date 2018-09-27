@@ -5,10 +5,13 @@ import java.util.List;
 public class ShoppingCartDTO {
 	
 	private Long id;
-	private List<ItemShoppingCartDTO> itemsShoppingCart;
+	private List<ShoppingCartItemDTO> itemsShoppingCart;
 	private Double subtotal;
 	
-	public ShoppingCartDTO(Long id, List<ItemShoppingCartDTO> itemsShoppingCart, Double subtotal) {
+	public ShoppingCartDTO() {}
+	
+	
+	public ShoppingCartDTO(Long id, List<ShoppingCartItemDTO> itemsShoppingCart, Double subtotal) {
 		this.id = id;
 		this.itemsShoppingCart = itemsShoppingCart;
 		this.subtotal = subtotal;
@@ -20,10 +23,10 @@ public class ShoppingCartDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public List<ItemShoppingCartDTO> getItemsShoppingCart() {
+	public List<ShoppingCartItemDTO> getItemsShoppingCart() {
 		return itemsShoppingCart;
 	}
-	public void setItemsShoppingCart(List<ItemShoppingCartDTO> itemsShoppingCart) {
+	public void setItemsShoppingCart(List<ShoppingCartItemDTO> itemsShoppingCart) {
 		this.itemsShoppingCart = itemsShoppingCart;
 	}
 	public Double getSubtotal() {

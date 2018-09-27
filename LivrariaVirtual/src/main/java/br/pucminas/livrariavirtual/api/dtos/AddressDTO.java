@@ -12,6 +12,7 @@ public class AddressDTO {
 	private String zipCode;
 	private String deliveryInstructions;
 	
+	public AddressDTO() {}
 	
 	public AddressDTO(Integer id, CustomerDTO customer, String fullName, String countryRegion, String streetAddress,
 			String city, String stateProvinceRegion, String zipCode, String deliveryInstructions) {

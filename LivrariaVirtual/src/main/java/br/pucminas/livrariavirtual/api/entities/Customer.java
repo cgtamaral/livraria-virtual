@@ -17,17 +17,17 @@ public class Customer {
 
 	private Long id;
 	private User user;
-	private List<Address> adresses;
+	private List<Address> addresses;
 	private List<PaymentOption> paymentOptions;
 	private List<Order> orders;
 
 	public Customer() {}
 	
 	public Customer(Long id,User user,
-			List<Address> adresses, List<PaymentOption> paymentOptions, List<Order> orders) {
+			List<Address> addresses, List<PaymentOption> paymentOptions, List<Order> orders) {
 		this.id = id;
 		this.user = user;
-		this.adresses = adresses;
+		this.addresses = addresses;
 		this.paymentOptions = paymentOptions;
 		this.orders = orders;
 	}
@@ -51,11 +51,11 @@ public class Customer {
 	}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	public List<Address> getAdresses() {
-		return adresses;
+	public List<Address> getAddresses() {
+		return addresses;
 	}
-	public void setAdresses(List<Address> adresses) {
-		this.adresses = adresses;
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

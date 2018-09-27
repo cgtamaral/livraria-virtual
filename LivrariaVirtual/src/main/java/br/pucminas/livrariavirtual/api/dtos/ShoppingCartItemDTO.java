@@ -2,14 +2,14 @@ package br.pucminas.livrariavirtual.api.dtos;
 
 import br.pucminas.livrariavirtual.api.entities.Book;
 
-public class ItemShoppingCartDTO {
+public class ShoppingCartItemDTO {
 	
 	private Long id;
 	private ShoppingCartDTO shoppingCart;
 	private Book book;
 	private Integer quantity;
 	
-	public ItemShoppingCartDTO(Long id, ShoppingCartDTO shoppingCart, Book book, Integer quantity) {
+	public ShoppingCartItemDTO(Long id, ShoppingCartDTO shoppingCart, Book book, Integer quantity) {
 		super();
 		this.id = id;
 		this.shoppingCart = shoppingCart;

@@ -84,12 +84,20 @@ public class Author
 	{
 		List<AuthorDTO> retorno = new ArrayList<AuthorDTO>();
 		for (Author author : autores) {
-			AuthorDTO authorDTO = new AuthorDTO();
-			authorDTO.setId(author.id);
-			authorDTO.setName(author.name);
-			authorDTO.setBiography(author.biography);
+			AuthorDTO authorDTO = convertToDTO(author);
 			retorno.add(authorDTO);
 		}
 		return retorno;
+	}
+
+	@Transient
+	public static AuthorDTO convertToDTO(Author author) {
+		
+		AuthorDTO authorDTO = new AuthorDTO();
+		authorDTO.setId(author.id);
+		authorDTO.setName(author.name);
+		authorDTO.setBiography(author.biography);
+
+		return authorDTO;
 	}
 }
