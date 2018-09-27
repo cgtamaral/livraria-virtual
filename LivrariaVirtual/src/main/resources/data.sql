@@ -9,12 +9,3 @@ weight, unit, price) VALUES(1,'A Guerra dos Tronos. As Crônicas de Gelo e Fogo 
 'Português', '8544102921', '978-8544102923',1,'Edição: 1ª (15 de setembro de 2015)','22,8 x 15,6 x 3 cm', 309.0, 'g',36.80);
 
 INSERT INTO Author_Book(author_id, book_id) VALUES(1,1);
-
-
-/*
- 
-INSERT INTO Address(id,, fullName, countryRegion, streetAddressm city, stateProvinceRegion, zipCode, deliveryInstructions) VALUES();
-
-
-
-*/
