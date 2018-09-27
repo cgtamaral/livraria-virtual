@@ -28,11 +28,15 @@ import br.pucminas.livrariavirtual.api.dtos.PublisherDTO;
 import br.pucminas.livrariavirtual.api.entities.Author;
 import br.pucminas.livrariavirtual.api.services.AuthorService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/v1/public")
 @CrossOrigin(origins = "*")
-@Api(value = "Authors", description = "Recurso para gerenciamento de autores")
+
+@Api(value = "authors", description = "Recurso para gerenciamento de autores", tags={ "authors"})
 public class AuthorController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AuthorController.class);
@@ -40,8 +44,10 @@ public class AuthorController {
 	@Autowired
 	AuthorService authorService;
 	
+    @ApiOperation(value = "Recupera todos os autores", nickname = "findAllAuthors", notes = "", tags={ "authors"})
+    @ApiResponses(value = {@ApiResponse(code = 404, message = "Nenhum autor foi encontrado na base de dados!") })
 	@GetMapping(value ="/authors")
-	public ResponseEntity<Response<List<AuthorDTO>>> findAll()
+	public ResponseEntity<Response<List<AuthorDTO>>> findAllAuthors()
 	{
 		log.info("Buscando todos os autores da base!");
 		Response<List<AuthorDTO>> response = new Response<List<AuthorDTO>>();
@@ -59,6 +65,7 @@ public class AuthorController {
 		return ResponseEntity.ok(response);
 	}
 	
+    @ApiOperation(value = "Recupera uma autor especifico", nickname = "findAuthorById", notes = "", tags={ "authors"})
 	@GetMapping(value ="/authors/{authorId}")
 	public ResponseEntity<Response<AuthorDTO>> findAuthorById(@PathVariable("authorId") Long authorId)
 	{
@@ -77,7 +84,8 @@ public class AuthorController {
 		
 		return ResponseEntity.ok(response);
 	}
-	
+    
+    @ApiOperation(value = "Recupera todos os livros de um autor especifico", nickname = "findAllBooksForAuthor", notes = "", tags={ "authors"})
 	@GetMapping(value ="/authors/{authorId}/books")
 	public ResponseEntity<Response<List<BookDTO>>> findAllBooksForAuthor(@PathVariable("authorId") Long authorId)
 	{
@@ -87,11 +95,11 @@ public class AuthorController {
 		List<BookDTO> retornoFakeNull = new ArrayList<BookDTO>();
 		retornoFakeNull.add(new BookDTO());
 		response.setData(retornoFakeNull);
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
 		
-		return ResponseEntity.badRequest().body(response);
+		return ResponseEntity.ok().body(response);
 	}
 	
+    @ApiOperation(value = "Recupera todas as editoras que publicaram livros de um autor especifico", nickname = "findAllPublishersForAuthor", notes = "", tags={ "authors"})
 	@GetMapping(value ="/authors/{authorId}/publishers")
 	public ResponseEntity<Response<List<PublisherDTO>>> findAllPublishersForAuthor(@PathVariable("authorId") Long authorId)
 	{
@@ -101,11 +109,11 @@ public class AuthorController {
 		List<PublisherDTO> retornoFakeNull = new ArrayList<PublisherDTO>();
 		retornoFakeNull.add(new PublisherDTO());
 		response.setData(retornoFakeNull);
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
 		
-		return ResponseEntity.badRequest().body(response);
+		return ResponseEntity.ok().body(response);
 	}
 	
+    @ApiOperation(value = "Insere um novo autor", nickname = "insertAuthor", notes = "", tags={ "authors"})
 	@PostMapping(value = "/authors")
 	public ResponseEntity<Response<AuthorDTO>> insertAuthor(@Valid @RequestBody BookDTO bookDTO,  BindingResult result)
 	{
@@ -113,11 +121,11 @@ public class AuthorController {
 		Response<AuthorDTO> response = new Response<AuthorDTO>();
 
 		response.setData(new AuthorDTO());
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
 		
-		return ResponseEntity.badRequest().body(response);
+		return ResponseEntity.ok().body(response);
 	}
 	
+    @ApiOperation(value = "Atualiza os dados de um autor especifico", nickname = "updateAuthor", notes = "", tags={ "authors"})
 	@PutMapping(value = "/authors/{authorId}")
 	public ResponseEntity<Response<AuthorDTO>> updateAuthor(@PathVariable("authorId") Long authorId, @Valid @RequestBody BookDTO bookDTO,  BindingResult result)
 	{
@@ -125,20 +133,18 @@ public class AuthorController {
 		Response<AuthorDTO> response = new Response<AuthorDTO>();
 
 		response.setData(new AuthorDTO());
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
 		
-		return ResponseEntity.badRequest().body(response);
+		return ResponseEntity.ok().body(response);
 	}
 	
+    @ApiOperation(value = "Remove um autor especifico", nickname = "deleteAuthor", notes = "", tags={ "authors"})
 	@DeleteMapping(value = "/authors/{authorId}")
 	public ResponseEntity<Response<String>> deleteAuthor(@PathVariable("authorId") Long authorId)
 	{
 		log.info("Removendo o autor: {}" + authorId);
 		Response<String> response = new Response<String>();
-		
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
-		
-		return ResponseEntity.badRequest().body(response);
+				
+		return ResponseEntity.ok().body(response);
 	}
 
 }

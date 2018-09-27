@@ -20,15 +20,17 @@ import br.pucminas.livrariavirtual.api.dtos.AuthorDTO;
 import br.pucminas.livrariavirtual.api.dtos.BookDTO;
 import br.pucminas.livrariavirtual.api.dtos.PublisherDTO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/v1/public")
 @CrossOrigin(origins = "*")
-@Api(value = "Publishers", description = "Recurso para gerenciamento de editoras")
+@Api(value = "publishers", description = "Recurso para gerenciamento de editoras", tags={ "publishers"})
 public class PublisherController {
 	
 	private static final Logger log = LoggerFactory.getLogger(PublisherController.class);
 	
+	@ApiOperation(value = "Recupera todas as editoras existentes", nickname = "findAllPublishers", notes = "", tags={ "publishers"})
 	@GetMapping(value ="/publishers")
 	public ResponseEntity<Response<List<PublisherDTO>>> findAllPublishers()
 	{
@@ -42,6 +44,7 @@ public class PublisherController {
 		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Recupera as informações de uma editora especifica", nickname = "findPublisherById", notes = "", tags={ "publishers"})
 	@GetMapping(value ="/publishers/{publisherId}")
 	public ResponseEntity<Response<PublisherDTO>> findPublisherById(@PathVariable("publisherId") Long publisherId)
 	{
@@ -53,7 +56,7 @@ public class PublisherController {
 		return ResponseEntity.ok().body(response);
 	}
 	
-	
+	@ApiOperation(value = "Recupera todos os livros publicados por uma editora especifica", nickname = "findAllBooksForPublisher", notes = "", tags={ "publishers"})
 	@GetMapping(value ="/publishers/{publisherId}/books")
 	public ResponseEntity<Response<List<BookDTO>>> findAllBooksForPublisher(@PathVariable("publisherId") Long publisherId)
 	{
@@ -67,7 +70,7 @@ public class PublisherController {
 		return ResponseEntity.ok().body(response);
 	}
 	
-	
+	@ApiOperation(value = "Recupera todos os autores com livros publicados por uma editora especifica", nickname = "findAllAuthorsForPublisher", notes = "", tags={ "publishers"})
 	@GetMapping(value ="/publishers/{publisherId}/authors")
 	public ResponseEntity<Response<List<AuthorDTO>>> findAllAuthorsForPublisher(@PathVariable("publisherId") Long publisherId)
 	{
@@ -81,6 +84,7 @@ public class PublisherController {
 		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Insere uma nova editora", nickname = "insertPublisher", notes = "", tags={ "publishers"})
 	@PostMapping(value ="/publishers")
 	public ResponseEntity<Response<PublisherDTO>> insertPublisher()
 	{
@@ -92,6 +96,7 @@ public class PublisherController {
 		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Atualiza as informações de uma editora", nickname = "updatePublisher", notes = "", tags={ "publishers"})
 	@PutMapping(value ="/publishers/{publisherId}")
 	public ResponseEntity<Response<PublisherDTO>> updatePublisher(@PathVariable("publisherId") Long publisherId)
 	{
@@ -103,10 +108,11 @@ public class PublisherController {
 		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Remove uma editora especifica", nickname = "deletePublisher", notes = "", tags={ "publishers"})
 	@DeleteMapping(value ="/publishers/{publisherId}")
-	public ResponseEntity<Response<String>> deleteAuthor(@PathVariable("authorId") Long authorId)
+	public ResponseEntity<Response<String>> deletePublisher(@PathVariable("publisherId") Long publisherId)
 	{
-		log.info("Removendo a editora: {}" + authorId);
+		log.info("Removendo a editora: {}" + publisherId);
 		Response<String> response = new Response<String>();
 		
 		

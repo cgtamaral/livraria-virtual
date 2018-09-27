@@ -36,12 +36,13 @@ import br.pucminas.livrariavirtual.api.services.BookReviewService;
 import br.pucminas.livrariavirtual.api.services.BookService;
 import br.pucminas.livrariavirtual.api.services.CustomerService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 
 @RestController
 @RequestMapping("/v1/public")
 @CrossOrigin(origins = "*")
-@Api(value = "Books", description = "Recurso para gerenciamento de livros")
+@Api(value = "books", description = "Recurso para gerenciamento de livros", tags={ "books"})
 public class BookController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
@@ -55,8 +56,9 @@ public class BookController {
 	@Autowired
 	CustomerService customerService;
 	
+	@ApiOperation(value = "Recupera todos os livros", nickname = "findAllBooks", notes = "", tags={ "books"})
 	@GetMapping(value ="/books")
-	public ResponseEntity<Response<List<BookDTO>>> findAll()
+	public ResponseEntity<Response<List<BookDTO>>> findAllBooks()
 	{
 		log.info("Buscando todos os livros existentes na base! {}");
 		Response<List<BookDTO>> response = new Response<List<BookDTO>>();
@@ -73,7 +75,8 @@ public class BookController {
 		
 		return ResponseEntity.ok(response);
 	}
-
+	
+	@ApiOperation(value = "Recupera as informações dos autores de um livro especifico", nickname = "findAllAuthorsForBook", notes = "", tags={ "books"})
 	@GetMapping(value ="/books/{bookId}/authors")
 	public ResponseEntity<Response<List<AuthorDTO>>> findAllAuthorsForBook(@PathVariable("bookId") Long bookId)
 	{
@@ -92,6 +95,7 @@ public class BookController {
 		return ResponseEntity.ok(response);
 	}
 	
+	@ApiOperation(value = "Recupera as informações da editora de um livro especifico", nickname = "findPublisherForBook", notes = "", tags={ "books"})
 	@GetMapping(value ="/books/{bookId}/publishers")
 	public ResponseEntity<Response<PublisherDTO>> findPublisherForBook(@PathVariable("bookId") Long bookId)
 	{	
@@ -110,6 +114,7 @@ public class BookController {
 		return ResponseEntity.ok(response);
 	}
 	
+	@ApiOperation(value = "Recupera todas as avaliações de um livro especifico", nickname = "findAllBookReviewForBook", notes = "", tags={ "books"})
 	@GetMapping(value ="/books/{bookId}/bookReviews")
 	public ResponseEntity<Response<List<BookReviewDTO>>> findAllBookReviewForBook(@PathVariable("bookId") Long bookId)
 	{
@@ -134,7 +139,8 @@ public class BookController {
 		
 		return ResponseEntity.ok(response);
 	}
-
+	
+	@ApiOperation(value = "Insere uma nova avaliação para um livro especifico", nickname = "insertBookReviewForBook", notes = "", tags={ "books"})
 	@PostMapping(value = "/books/{bookId}/bookReviews")
 	public ResponseEntity<Response<BookReviewDTO>> insertBookReviewForBook(@PathVariable("bookId") Long bookId, 
 			@Valid @RequestBody BookReviewDTO bookReviewDTO,  BindingResult result)
@@ -156,6 +162,7 @@ public class BookController {
 		return ResponseEntity.ok(response);
 	}
 	
+	@ApiOperation(value = "Atualiza uma determinada avaliação de um livro especifico", nickname = "updateBookReviewForBook", notes = "", tags={ "books"})
 	@PutMapping(value = "/books/{bookId}/bookReviews/{bookReviewId}")
 	public ResponseEntity<Response<BookReviewDTO>> updateBookReviewForBook(@PathVariable("bookId") Long bookId, @PathVariable("bookId") Long bookReviewId,
 			@Valid @RequestBody BookReviewDTO bookReviewDTO,  BindingResult result)
@@ -164,22 +171,22 @@ public class BookController {
 		Response<BookReviewDTO> response = new Response<BookReviewDTO>();
 		
 		response.setData(new BookReviewDTO());
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
 		
-		return ResponseEntity.badRequest().body(response);
+		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Remove uma determinada avaliação de um livro especifico", nickname = "deleteBookReviewForBook", notes = "", tags={ "books"})
 	@DeleteMapping(value = "/books/{bookId}/bookReviews/{bookReviewId}")
 	public ResponseEntity<Response<String>> deleteBookReviewForBook(@PathVariable("bookId") Long bookId, @PathVariable("bookId") Long bookReviewId)
 	{
 		log.info("Deletetando comentário {} "+bookReviewId+" para o livro {}: " + bookId);
 		Response<String> response = new Response<String>();
 		
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
 		
-		return ResponseEntity.badRequest().body(response);
+		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Insere um novo livro", nickname = "insertBook", notes = "", tags={ "books"})
 	@PostMapping(value = "/books")
 	public ResponseEntity<Response<BookDTO>> insertBook(@Valid @RequestBody BookDTO bookDTO,  BindingResult result)
 	{
@@ -187,11 +194,11 @@ public class BookController {
 		Response<BookDTO> response = new Response<BookDTO>();
 		
 		response.setData(new BookDTO());
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
 		
-		return ResponseEntity.badRequest().body(response);
+		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Atualiza as informações de um livro especifico", nickname = "updateBook", notes = "", tags={ "books"})
 	@PutMapping(value = "/books/{bookId}")
 	public ResponseEntity<Response<BookDTO>> updateBook(@PathVariable("bookId") Long bookId, @Valid @RequestBody BookDTO bookDTO,  BindingResult result)
 	{
@@ -199,20 +206,18 @@ public class BookController {
 		Response<BookDTO> response = new Response<BookDTO>();
 		
 		response.setData(new BookDTO());
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
 		
-		return ResponseEntity.badRequest().body(response);
+		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Remove um livro especifico", nickname = "deleteBook", notes = "", tags={ "books"})
 	@DeleteMapping(value = "/books/{bookId}")
 	public ResponseEntity<Response<String>> deleteBook(@PathVariable("bookId") Long bookId)
 	{
 		log.info("Removendo o livro: {}" + bookId);
 		Response<String> response = new Response<String>();
-		
-		response.getErrors().add("Desculpe! Método ainda não implementado!");
-		
-		return ResponseEntity.badRequest().body(response);
+			
+		return ResponseEntity.ok().body(response);
 	}
 	
 	private BookReview convertBookReviewDTOToEntity(Long bookId, BookReviewDTO bookReviewDTO, BindingResult result)

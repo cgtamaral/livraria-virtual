@@ -24,15 +24,17 @@ import br.pucminas.livrariavirtual.api.dtos.DeliveryDTO;
 import br.pucminas.livrariavirtual.api.dtos.OrderDTO;
 import br.pucminas.livrariavirtual.api.dtos.PaymentDTO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/v1/public")
 @CrossOrigin(origins = "*")
-@Api(value = "Orders", description = "Recurso para gerenciamento de pedidos")
+@Api(value = "orders", description = "Recurso para gerenciamento de pedidos", tags={ "orders"})
 public class OrderController 
 {
 	private static final Logger log = LoggerFactory.getLogger(OrderController.class);
 	
+	@ApiOperation(value = "Recupera todos os pedidos existentes", nickname = "findAllOrders", notes = "", tags={ "orders"})
 	@GetMapping(value ="/orders")
 	public ResponseEntity<Response<List<OrderDTO>>> findAllOrders()
 	{
@@ -47,6 +49,7 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Recupera um pedido especifico", nickname = "findOrderById", notes = "", tags={ "orders"})
 	@GetMapping(value ="/orders/{orderId}")
 	public ResponseEntity<Response<OrderDTO>> findOrderById(@PathVariable("orderId") Long orderId)
 	{
@@ -57,8 +60,9 @@ public class OrderController
 		
 		return ResponseEntity.ok().body(response);
 	}
-	
-	@GetMapping(value ="/orders/{idOrder}/Payments")
+
+	@ApiOperation(value = "Recupera as informações de pagamento de um pedido especifico", nickname = "findPaymentByOrderId", notes = "", tags={ "orders"})
+	@GetMapping(value ="/orders/{orderId}/Payments")
 	public ResponseEntity<Response<PaymentDTO>> findPaymentByOrderId(@PathVariable("orderId") Long orderId)
 	{
 		log.info("Buscando pagamento para o pedido: {}" + orderId);
@@ -69,7 +73,8 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
-	@GetMapping(value ="/orders/{idOrder}/Deliverys")
+	@ApiOperation(value = "Recupera as informações de entrega de um pedido especifico", nickname = "findDeliveyByOrderId", notes = "", tags={ "orders"})
+	@GetMapping(value ="/orders/{orderId}/Deliverys")
 	public ResponseEntity<Response<DeliveryDTO>> findDeliveyByOrderId(@PathVariable("orderId") Long orderId)
 	{
 		log.info("Buscando dados de entrega do pedido: {}" + orderId);
@@ -80,6 +85,7 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Insere um novo pedido", nickname = "insertOrder", notes = "", tags={ "orders"})
 	@PostMapping(value ="/orders")
 	public ResponseEntity<Response<OrderDTO>> insertOrder(@Valid @RequestBody OrderDTO orderDTO,  BindingResult result)
 	{
@@ -91,6 +97,7 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Atualiza as informações de um pedido especifico", nickname = "updateOrder", notes = "", tags={ "orders"})
 	@PutMapping(value ="/orders/{orderId}")
 	public ResponseEntity<Response<OrderDTO>> updateOrder(@Valid @RequestBody OrderDTO orderDTO, @PathVariable("orderId") Long orderId,  BindingResult result)
 	{
@@ -102,6 +109,7 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
+	@ApiOperation(value = "Cancela um pedido especifico", nickname = "updateOrder", notes = "", tags={ "orders"})
 	@DeleteMapping(value ="/orders/{orderId}")
 	public ResponseEntity<Response<String>> deleteOrder(@PathVariable("orderId") Long orderId)
 	{
@@ -111,7 +119,8 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
-	@PostMapping(value ="/orders/{idOrder}/Payments")
+	@ApiOperation(value = "Insere informações de pagamento para um pedido especifico", nickname = "updateOrder", notes = "", tags={ "orders"})
+	@PostMapping(value ="/orders/{orderId}/Payments")
 	public ResponseEntity<Response<PaymentDTO>> insertPaymentForOrder(@PathVariable("orderId") Long orderId, @Valid @RequestBody OrderDTO orderDTO,  BindingResult result)
 	{
 		log.info("Incluindo informações de pagamento para o pedido: {} " + orderId);
@@ -122,7 +131,8 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
-	@PutMapping(value ="/orders/{idOrder}/Payments/{paymentId}")
+	@ApiOperation(value = "Atualiza as informações de pagamento de um pedido especifico", nickname = "updateOrder", notes = "", tags={ "orders"})
+	@PutMapping(value ="/orders/{orderId}/Payments/{paymentId}")
 	public ResponseEntity<Response<OrderDTO>> updatePaymentForOrder(@Valid @RequestBody OrderDTO orderDTO, @PathVariable("orderId") Long orderId,
 			 @PathVariable("paymentId") Long paymentId, BindingResult result)
 	{
@@ -134,7 +144,8 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
-	@DeleteMapping(value ="/orders/{idOrder}/Payments/{paymentId}")
+	@ApiOperation(value = "Remove as informações de pagamento de um pedido especifico", nickname = "updateOrder", notes = "", tags={ "orders"})
+	@DeleteMapping(value ="/orders/{orderId}/Payments/{paymentId}")
 	public ResponseEntity<Response<String>> deletePaymentForOrder(@PathVariable("orderId") Long orderId, @PathVariable("paymentId") Long paymentId)
 	{
 		log.info("Removendo a forma de pagamento "+paymentId+" do pedido " + orderId);
@@ -143,7 +154,8 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
-	@PostMapping(value ="/orders/{idOrder}/Deliverys")
+	@ApiOperation(value = "Insere as informações de entrega de um pedido especifico", nickname = "updateOrder", notes = "", tags={ "orders"})
+	@PostMapping(value ="/orders/{orderId}/Deliverys")
 	public ResponseEntity<Response<DeliveryDTO>> insertDeliveryForOrder(@PathVariable("orderId") Long orderId, @Valid @RequestBody DeliveryDTO deliveryDTO,  
 			BindingResult result)
 	{
@@ -155,7 +167,8 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
-	@PutMapping(value ="/orders/{idOrder}/Deliverys/{deliveryId}")
+	@ApiOperation(value = "Atualiza as informações de entrega de um pedido especifico", nickname = "updateOrder", notes = "", tags={ "orders"})
+	@PutMapping(value ="/orders/{orderId}/Deliverys/{deliveryId}")
 	public ResponseEntity<Response<OrderDTO>> updateDeliveryForOrder(@Valid @RequestBody DeliveryDTO deliveryDTO, @PathVariable("orderId") Long orderId,
 			 @PathVariable("deliveryId") Long deliveryId, BindingResult result)
 	{
@@ -167,7 +180,8 @@ public class OrderController
 		return ResponseEntity.ok().body(response);
 	}
 	
-	@DeleteMapping(value ="/orders/{idOrder}/Deliverys/{deliveryId}")
+	@ApiOperation(value = "Remove as informações de entrega de um pedido especifico", nickname = "updateOrder", notes = "", tags={ "orders"})
+	@DeleteMapping(value ="/orders/{orderId}/Deliverys/{deliveryId}")
 	public ResponseEntity<Response<String>> deleteDeliveryForOrder(@PathVariable("orderId") Long orderId,
 			@PathVariable("deliveryId") Long deliveryId)
 	{
