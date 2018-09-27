@@ -37,6 +37,9 @@ import br.pucminas.livrariavirtual.api.services.BookService;
 import br.pucminas.livrariavirtual.api.services.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 
 @RestController
@@ -57,7 +60,9 @@ public class BookController {
 	CustomerService customerService;
 	
 	@ApiOperation(value = "Recupera todos os livros", nickname = "findAllBooks", notes = "", tags={ "books"})
-	@GetMapping(value ="/books")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida!"),
+		   	@ApiResponse(code = 404, message = "Nenhum livro foi encontrado na base de dados!") })
+	@GetMapping(value ="/books", produces = "application/json")
 	public ResponseEntity<Response<List<BookDTO>>> findAllBooks()
 	{
 		log.info("Buscando todos os livros existentes na base! {}");
@@ -77,8 +82,11 @@ public class BookController {
 	}
 	
 	@ApiOperation(value = "Recupera as informações dos autores de um livro especifico", nickname = "findAllAuthorsForBook", notes = "", tags={ "books"})
-	@GetMapping(value ="/books/{bookId}/authors")
-	public ResponseEntity<Response<List<AuthorDTO>>> findAllAuthorsForBook(@PathVariable("bookId") Long bookId)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida!"),
+		    @ApiResponse(code = 400, message = "O id informado é inválido!"),
+			@ApiResponse(code = 404, message = "Nenhum livro foi encontrado para o id informado!")})
+	@GetMapping(value ="/books/{bookId}/authors", produces = "application/json")
+	public ResponseEntity<Response<List<AuthorDTO>>> findAllAuthorsForBook(@ApiParam(value = "Identificador do livro a ser consultado", required = true) @PathVariable("bookId") Long bookId)
 	{
 		log.info("Buscando todos os autores do livro {}:" + bookId);
 		Response<List<AuthorDTO>> response = new Response<List<AuthorDTO>>();
@@ -96,8 +104,11 @@ public class BookController {
 	}
 	
 	@ApiOperation(value = "Recupera as informações da editora de um livro especifico", nickname = "findPublisherForBook", notes = "", tags={ "books"})
-	@GetMapping(value ="/books/{bookId}/publishers")
-	public ResponseEntity<Response<PublisherDTO>> findPublisherForBook(@PathVariable("bookId") Long bookId)
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida!"),
+			    @ApiResponse(code = 400, message = "O id informado é inválido!"),
+				@ApiResponse(code = 404, message = "Nenhuma editora foi encontrado para o livro informado!")})
+	@GetMapping(value ="/books/{bookId}/publishers", produces = "application/json")
+	public ResponseEntity<Response<PublisherDTO>> findPublisherForBook(@ApiParam(value = "Identificador do livro a ter as informações de editora consultada", required = true) @PathVariable("bookId") Long bookId)
 	{	
 		log.info("Buscando editora do livro: {}" + bookId);
 		Response<PublisherDTO> response = new Response<PublisherDTO>();
@@ -115,8 +126,11 @@ public class BookController {
 	}
 	
 	@ApiOperation(value = "Recupera todas as avaliações de um livro especifico", nickname = "findAllBookReviewForBook", notes = "", tags={ "books"})
-	@GetMapping(value ="/books/{bookId}/bookReviews")
-	public ResponseEntity<Response<List<BookReviewDTO>>> findAllBookReviewForBook(@PathVariable("bookId") Long bookId)
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida!"),
+		    @ApiResponse(code = 400, message = "O id informado é inválido!"),
+		    @ApiResponse(code = 404, message = "Nenhum registro foi encontrado na base de dados!")})
+	@GetMapping(value ="/books/{bookId}/bookReviews", produces = "application/json")
+	public ResponseEntity<Response<List<BookReviewDTO>>> findAllBookReviewForBook(@ApiParam(value = "Identificador do livro a ter as informações de avaliação de clientes consultadas", required = true) @PathVariable("bookId") Long bookId)
 	{
 		log.info("Buscando todos os comentários de um livro na base! {}");
 		Response<List<BookReviewDTO>> response = new Response<List<BookReviewDTO>>();
@@ -141,9 +155,12 @@ public class BookController {
 	}
 	
 	@ApiOperation(value = "Insere uma nova avaliação para um livro especifico", nickname = "insertBookReviewForBook", notes = "", tags={ "books"})
-	@PostMapping(value = "/books/{bookId}/bookReviews")
-	public ResponseEntity<Response<BookReviewDTO>> insertBookReviewForBook(@PathVariable("bookId") Long bookId, 
-			@Valid @RequestBody BookReviewDTO bookReviewDTO,  BindingResult result)
+	@ApiResponses(value = {@ApiResponse(code = 201, message = "Operação bem sucessida e uma nova avaliação foi incluida para o livro na base de dados"),
+		    @ApiResponse(code = 400, message = "O request informado é inválido!"),
+		    @ApiResponse(code = 404, message = "Registro não encontrado na base de dados!")})
+	@PostMapping(value = "/books/{bookId}/bookReviews", produces = "application/json")
+	public ResponseEntity<Response<BookReviewDTO>> insertBookReviewForBook(@ApiParam(value = "Identificador do livro a ter uma avaliação incluida na base de dados", required = true) @PathVariable("bookId") Long bookId, 
+			@ApiParam(value = "Objeto de avaliação livro que precisa ser incluido na base de dados", required = true) @Valid @RequestBody BookReviewDTO bookReviewDTO,  BindingResult result)
 	{
 		log.info("Inserindo comentário para o livro: {}" + bookId);
 		Response<BookReviewDTO> response = new Response<BookReviewDTO>();
@@ -163,9 +180,13 @@ public class BookController {
 	}
 	
 	@ApiOperation(value = "Atualiza uma determinada avaliação de um livro especifico", nickname = "updateBookReviewForBook", notes = "", tags={ "books"})
-	@PutMapping(value = "/books/{bookId}/bookReviews/{bookReviewId}")
-	public ResponseEntity<Response<BookReviewDTO>> updateBookReviewForBook(@PathVariable("bookId") Long bookId, @PathVariable("bookId") Long bookReviewId,
-			@Valid @RequestBody BookReviewDTO bookReviewDTO,  BindingResult result)
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida e a avaliação livro foi atualizado na base de dados"),
+		    @ApiResponse(code = 400, message = "O request informado é inválido!"),
+		    @ApiResponse(code = 404, message = "Registro não encontrado na base de dados!")})
+	@PutMapping(value = "/books/{bookId}/bookReviews/{bookReviewId}", produces = "application/json")
+	public ResponseEntity<Response<BookReviewDTO>> updateBookReviewForBook(@ApiParam(value = "Identificador do livro a ter uma avaliação atualizada na base de dados", required = true) @PathVariable("bookId") Long bookId,
+			@ApiParam(value = "Identificador do avaliação livro a ser atualizada na base de dados", required = true) @PathVariable("bookId") Long bookReviewId,
+			@ApiParam(value = "Objeto da avaliação livro que precisa ser atualizado na base de dados", required = true) @Valid @RequestBody BookReviewDTO bookReviewDTO,  BindingResult result)
 	{
 		log.info("Atualizando comentário {} "+bookReviewId+" para o livro {}" + bookId);
 		Response<BookReviewDTO> response = new Response<BookReviewDTO>();
@@ -176,8 +197,11 @@ public class BookController {
 	}
 	
 	@ApiOperation(value = "Remove uma determinada avaliação de um livro especifico", nickname = "deleteBookReviewForBook", notes = "", tags={ "books"})
-	@DeleteMapping(value = "/books/{bookId}/bookReviews/{bookReviewId}")
-	public ResponseEntity<Response<String>> deleteBookReviewForBook(@PathVariable("bookId") Long bookId, @PathVariable("bookId") Long bookReviewId)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida e a avaliação livro foi removida na base de dados!"),
+			   @ApiResponse(code = 404, message = "Registro não encontrado na base de dados!")})
+	@DeleteMapping(value = "/books/{bookId}/bookReviews/{bookReviewId}", produces = "application/json")
+	public ResponseEntity<Response<String>> deleteBookReviewForBook(@ApiParam(value = "Identificador do livro a ter uma avaliação removida na base de dados", required = true) @PathVariable("bookId") Long bookId,
+			@ApiParam(value = "Identificador da avaliação livro a ser removida na base de dados", required = true) @PathVariable("bookId") Long bookReviewId)
 	{
 		log.info("Deletetando comentário {} "+bookReviewId+" para o livro {}: " + bookId);
 		Response<String> response = new Response<String>();
@@ -187,8 +211,11 @@ public class BookController {
 	}
 	
 	@ApiOperation(value = "Insere um novo livro", nickname = "insertBook", notes = "", tags={ "books"})
-	@PostMapping(value = "/books")
-	public ResponseEntity<Response<BookDTO>> insertBook(@Valid @RequestBody BookDTO bookDTO,  BindingResult result)
+	@ApiResponses(value = {@ApiResponse(code = 201, message = "Operação bem sucessida e um novo livro foi incluido na base de dados"),
+		    @ApiResponse(code = 400, message = "O objeto de request possui informações inválidas para a inclusão do livro!"),
+		    @ApiResponse(code = 404, message = "Registro não encontrado na base de dados!")})
+	@PostMapping(value = "/books", produces = "application/json")
+	public ResponseEntity<Response<BookDTO>> insertBook(@ApiParam(value = "Objeto do livro que precisa ser incluido na base de dados", required = true)  @Valid @RequestBody BookDTO bookDTO,  BindingResult result)
 	{
 		log.info("Incluindo novo livro {}");
 		Response<BookDTO> response = new Response<BookDTO>();
@@ -199,8 +226,12 @@ public class BookController {
 	}
 	
 	@ApiOperation(value = "Atualiza as informações de um livro especifico", nickname = "updateBook", notes = "", tags={ "books"})
-	@PutMapping(value = "/books/{bookId}")
-	public ResponseEntity<Response<BookDTO>> updateBook(@PathVariable("bookId") Long bookId, @Valid @RequestBody BookDTO bookDTO,  BindingResult result)
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida e o livro foi atualizado na base de dados"),
+		    @ApiResponse(code = 400, message = "O request possui informações inválidas para a atualização do livro!"),
+		    @ApiResponse(code = 404, message = "Registro não encontrado na base de dados!")})
+	@PutMapping(value = "/books/{bookId}", produces = "application/json")
+	public ResponseEntity<Response<BookDTO>> updateBook(@ApiParam(value = "Identificador do livro a ser atualizado na base de dados", required = true) @PathVariable("bookId") Long bookId, 
+			@ApiParam(value = "Objeto do livro que precisa ser atualizado na base de dados", required = true) @Valid @RequestBody BookDTO bookDTO,  BindingResult result)
 	{
 		log.info("Atualizando o livro: {}" + bookId);
 		Response<BookDTO> response = new Response<BookDTO>();
@@ -211,8 +242,10 @@ public class BookController {
 	}
 	
 	@ApiOperation(value = "Remove um livro especifico", nickname = "deleteBook", notes = "", tags={ "books"})
-	@DeleteMapping(value = "/books/{bookId}")
-	public ResponseEntity<Response<String>> deleteBook(@PathVariable("bookId") Long bookId)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida e o livro foi removido na base de dados!"),
+			   			@ApiResponse(code = 404, message = "Registro não encontrado na base de dados!")})
+	@DeleteMapping(value = "/books/{bookId}", produces = "application/json")
+	public ResponseEntity<Response<String>> deleteBook(@ApiParam(value = "Identificador do livro a ser removido na base de dados", required = true) @PathVariable("bookId") Long bookId)
 	{
 		log.info("Removendo o livro: {}" + bookId);
 		Response<String> response = new Response<String>();

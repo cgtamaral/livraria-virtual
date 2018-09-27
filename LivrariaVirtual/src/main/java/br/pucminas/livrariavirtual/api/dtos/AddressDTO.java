@@ -2,7 +2,7 @@ package br.pucminas.livrariavirtual.api.dtos;
 
 public class AddressDTO {
 	
-	private Integer id;
+	private Long id;
 	private CustomerDTO customer;
 	private String fullName;
 	private String countryRegion;
@@ -14,7 +14,7 @@ public class AddressDTO {
 	
 	public AddressDTO() {}
 	
-	public AddressDTO(Integer id, CustomerDTO customer, String fullName, String countryRegion, String streetAddress,
+	public AddressDTO(Long id, CustomerDTO customer, String fullName, String countryRegion, String streetAddress,
 			String city, String stateProvinceRegion, String zipCode, String deliveryInstructions) {
 		super();
 		this.id = id;
@@ -28,10 +28,10 @@ public class AddressDTO {
 		this.deliveryInstructions = deliveryInstructions;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public CustomerDTO getCustomer() {

@@ -2,7 +2,7 @@ package br.pucminas.livrariavirtual.api.dtos;
 
 public class AuthorDTO {
 	
-	private Integer id;
+	private Long id;
 	private String name;
 	private String biography;
 
@@ -10,16 +10,16 @@ public class AuthorDTO {
 	public AuthorDTO() {}
 	
 		
-	public AuthorDTO(Integer id, String name, String biography) {
+	public AuthorDTO(Long id, String name, String biography) {
 		this.id = id;
 		this.name = name;
 		this.biography = biography;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {

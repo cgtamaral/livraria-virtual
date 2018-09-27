@@ -19,7 +19,7 @@ import br.pucminas.livrariavirtual.api.dtos.AuthorDTO;
 @Entity
 public class Author 
 {
-	private Integer id;
+	private Long id;
 	private String name;
 	private String biography;
 	private List<Book> books;
@@ -27,7 +27,7 @@ public class Author
 	
 	public Author() {}
 	
-	public Author(Integer id, String name, String biography, List<Book> books, List<Publisher> publishers) 
+	public Author(Long id, String name, String biography, List<Book> books, List<Publisher> publishers) 
 	{
 		this.id = id;
 		this.name = name;
@@ -38,10 +38,10 @@ public class Author
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

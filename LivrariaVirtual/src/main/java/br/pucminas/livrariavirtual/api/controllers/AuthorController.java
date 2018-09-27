@@ -29,6 +29,7 @@ import br.pucminas.livrariavirtual.api.entities.Author;
 import br.pucminas.livrariavirtual.api.services.AuthorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -45,8 +46,9 @@ public class AuthorController {
 	AuthorService authorService;
 	
     @ApiOperation(value = "Recupera todos os autores", nickname = "findAllAuthors", notes = "", tags={ "authors"})
-    @ApiResponses(value = {@ApiResponse(code = 404, message = "Nenhum autor foi encontrado na base de dados!") })
-	@GetMapping(value ="/authors")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida!"),
+    					   	@ApiResponse(code = 404, message = "Nenhum autor foi encontrado na base de dados!") })
+    @GetMapping(value ="/authors", produces = "application/json")
 	public ResponseEntity<Response<List<AuthorDTO>>> findAllAuthors()
 	{
 		log.info("Buscando todos os autores da base!");
@@ -66,8 +68,11 @@ public class AuthorController {
 	}
 	
     @ApiOperation(value = "Recupera uma autor especifico", nickname = "findAuthorById", notes = "", tags={ "authors"})
-	@GetMapping(value ="/authors/{authorId}")
-	public ResponseEntity<Response<AuthorDTO>> findAuthorById(@PathVariable("authorId") Long authorId)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida!"),
+						    @ApiResponse(code = 400, message = "O id informado é inválido!"),
+							@ApiResponse(code = 404, message = "Nenhum autor foi encontrado para o id informado!")})
+	@GetMapping(value ="/authors/{authorId}", produces = "application/json")
+	public ResponseEntity<Response<AuthorDTO>> findAuthorById(@ApiParam(value = "Identificador do autor a ser consultado", required = true) @PathVariable("authorId") Long authorId)
 	{
 		log.info("Buscando autor: {}" + authorId);
 		Response<AuthorDTO> response = new Response<AuthorDTO>();
@@ -86,8 +91,11 @@ public class AuthorController {
 	}
     
     @ApiOperation(value = "Recupera todos os livros de um autor especifico", nickname = "findAllBooksForAuthor", notes = "", tags={ "authors"})
-	@GetMapping(value ="/authors/{authorId}/books")
-	public ResponseEntity<Response<List<BookDTO>>> findAllBooksForAuthor(@PathVariable("authorId") Long authorId)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida!"),
+		    @ApiResponse(code = 400, message = "O id informado é inválido!"),
+			@ApiResponse(code = 404, message = "Nenhum livro foi encontrado para o autor informado!")})
+	@GetMapping(value ="/authors/{authorId}/books", produces = "application/json")
+	public ResponseEntity<Response<List<BookDTO>>> findAllBooksForAuthor(@ApiParam(value = "Identificador de um autor", required = true) @PathVariable("authorId") Long authorId)
 	{
 		log.info("Buscando livros para o author: {}" + authorId);
 		Response<List<BookDTO>> response = new Response<List<BookDTO>>();
@@ -100,8 +108,11 @@ public class AuthorController {
 	}
 	
     @ApiOperation(value = "Recupera todas as editoras que publicaram livros de um autor especifico", nickname = "findAllPublishersForAuthor", notes = "", tags={ "authors"})
-	@GetMapping(value ="/authors/{authorId}/publishers")
-	public ResponseEntity<Response<List<PublisherDTO>>> findAllPublishersForAuthor(@PathVariable("authorId") Long authorId)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida!"),
+		    @ApiResponse(code = 400, message = "O id informado é inválido!"),
+			@ApiResponse(code = 404, message = "Nenhuma editora foi encontrado para o autor informado!")})
+    @GetMapping(value ="/authors/{authorId}/publishers", produces = "application/json")
+	public ResponseEntity<Response<List<PublisherDTO>>> findAllPublishersForAuthor(@ApiParam(value = "Identificador de um autor", required = true) @PathVariable("authorId") Long authorId)
 	{
 		log.info("Buscando Editoras para o author: {}" + authorId);
 		Response<List<PublisherDTO>> response = new Response<List<PublisherDTO>>();
@@ -114,8 +125,10 @@ public class AuthorController {
 	}
 	
     @ApiOperation(value = "Insere um novo autor", nickname = "insertAuthor", notes = "", tags={ "authors"})
-	@PostMapping(value = "/authors")
-	public ResponseEntity<Response<AuthorDTO>> insertAuthor(@Valid @RequestBody BookDTO bookDTO,  BindingResult result)
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Operação bem sucessida e um novo autor foi incluido a base de dados!"),
+		    @ApiResponse(code = 400, message = "O objeto de request possui informações inválidas para a inclusão do autor!")})
+	@PostMapping(value = "/authors", produces = "application/json")
+	public ResponseEntity<Response<AuthorDTO>> insertAuthor(@ApiParam(value = "Objeto de autor que precisa ser incluido na base de dados", required = true) @Valid @RequestBody BookDTO bookDTO,  BindingResult result)
 	{
 		log.info("Incluindo novo autor!");
 		Response<AuthorDTO> response = new Response<AuthorDTO>();
@@ -126,8 +139,11 @@ public class AuthorController {
 	}
 	
     @ApiOperation(value = "Atualiza os dados de um autor especifico", nickname = "updateAuthor", notes = "", tags={ "authors"})
-	@PutMapping(value = "/authors/{authorId}")
-	public ResponseEntity<Response<AuthorDTO>> updateAuthor(@PathVariable("authorId") Long authorId, @Valid @RequestBody BookDTO bookDTO,  BindingResult result)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida e o autor foi atualizado com sucesso na base de dados!"),
+		    @ApiResponse(code = 400, message = "O objeto de request possui informações inválidas para a atualização do autor!"),
+		    @ApiResponse(code = 404, message = "O autor informado não foi encontrado na base de dados!")})
+	@PutMapping(value = "/authors/{authorId}", produces = "application/json")
+	public ResponseEntity<Response<AuthorDTO>> updateAuthor(@ApiParam(value = "Identificador do autor a ser atualizado", required = true) @PathVariable("authorId") Long authorId, @ApiParam(value = "Objeto de autor que precisa ser atualizado na base de dados", required = true) @Valid @RequestBody BookDTO bookDTO,  BindingResult result)
 	{
 		log.info("Atualizando o author: {}" + authorId);
 		Response<AuthorDTO> response = new Response<AuthorDTO>();
@@ -138,8 +154,10 @@ public class AuthorController {
 	}
 	
     @ApiOperation(value = "Remove um autor especifico", nickname = "deleteAuthor", notes = "", tags={ "authors"})
-	@DeleteMapping(value = "/authors/{authorId}")
-	public ResponseEntity<Response<String>> deleteAuthor(@PathVariable("authorId") Long authorId)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Operação bem sucessida e o autor foi removido com sucesso na base de dados!"),
+		    			   @ApiResponse(code = 404, message = "O autor informado não foi encontrado na base de dados!")})
+	@DeleteMapping(value = "/authors/{authorId}", produces = "application/json")
+	public ResponseEntity<Response<String>> deleteAuthor(@ApiParam(value = "Identificador do autor a ser removido", required = true) @PathVariable("authorId") Long authorId)
 	{
 		log.info("Removendo o autor: {}" + authorId);
 		Response<String> response = new Response<String>();

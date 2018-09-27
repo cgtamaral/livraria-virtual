@@ -2,24 +2,24 @@ package br.pucminas.livrariavirtual.api.dtos;
 
 public class PublisherDTO {
 	
-	private Integer id;
+	private Long id;
 	private String name;
 	private String about;
 
 	
 	public PublisherDTO() {}
 	
-	public PublisherDTO(Integer id, String name, String about) {
+	public PublisherDTO(Long id, String name, String about) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.about = about;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
